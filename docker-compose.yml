@@ -2,14 +2,35 @@ version: '3.3'
 
 services:
   bot:
-    image: "${BOT_IMAGE_NAME}"
-    container_name: "${BOT_CONTAINER_NAME}"
+    image: "${BOT_IMAGE_NAME:-tg_bot-image}"
+    container_name: "${BOT_CONTAINER_NAME:-tg_bot-container}"
     build:
       context: .
-    working_dir: "/usr/src/app/${BOT_NAME}"
+    working_dir: "/usr/src/app/${BOT_NAME:-tg_bot}"
+    networks:
+      - botnet
     volumes:
-    - .:/usr/src/app/${BOT_NAME}
+    - .:/usr/src/app/${BOT_NAME:-tg_bot}
     command: python3 -m bot
     restart: always
     env_file:
       - ".env"
+    depends_on:
+      - db
+  db:
+    image: postgres:12-alpine
+    container_name: database
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: $PG_PASSWORD
+      POSTGRES_DB: $DB_NAME
+    ports:
+      - 5432:5432
+    networks:
+      - botnet
+    volumes:
+      - ./pgdata:/var/lib/postgresql
+
+networks:
+  botnet:
+    driver: bridge

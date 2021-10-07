@@ -23,6 +23,6 @@ async def bot_echo_all(message: types.Message, state: FSMContext):
     await message.answer('\n'.join(text))
 
 
-def register_echo(dp: Dispatcher):
+def setup_echo(dp: Dispatcher):
     dp.register_message_handler(bot_echo)
     dp.register_message_handler(bot_echo_all, state="*", content_types=types.ContentTypes.ANY)

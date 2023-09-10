@@ -2,32 +2,21 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from aiogram.contrib.fsm_storage.redis import RedisStorage2
+from aiogram.fsm.storage.memory import MemoryStorage
+# from aiogram.fsm.storage.redis import RedisStorage
 
 from tgbot.config import load_config
 from tgbot.filters.admin import AdminFilter
-from tgbot.handlers.admin import register_admin
-from tgbot.handlers.echo import register_echo
-from tgbot.handlers.user import register_user
-from tgbot.middlewares.environment import EnvironmentMiddleware
+from tgbot.handlers import admin
+from tgbot.handlers import echo
+from tgbot.handlers import user
+
 
 logger = logging.getLogger(__name__)
 
 
-def register_all_middlewares(dp, config):
-    dp.setup_middleware(EnvironmentMiddleware(config=config))
-
-
 def register_all_filters(dp):
     dp.filters_factory.bind(AdminFilter)
-
-
-def register_all_handlers(dp):
-    register_admin(dp)
-    register_user(dp)
-
-    register_echo(dp)
 
 
 async def main():
@@ -38,22 +27,21 @@ async def main():
     logger.info("Starting bot")
     config = load_config(".env")
 
-    storage = RedisStorage2() if config.tg_bot.use_redis else MemoryStorage()
+    storage = MemoryStorage()  # RedisStorage() if config.tg_bot.use_redis else
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
-    dp = Dispatcher(bot, storage=storage)
+    dp = Dispatcher(bot=bot, storage=storage)
+    dp.include_router(user.router)
+    dp.include_router(echo.router)
+    dp.include_router(admin.router)
 
-    bot['config'] = config
-
-    register_all_middlewares(dp, config)
-    register_all_filters(dp)
-    register_all_handlers(dp)
+    # bot['config'] = config
 
     # start
     try:
-        await dp.start_polling()
+        await dp.start_polling(bot)
     finally:
         await dp.storage.close()
-        await dp.storage.wait_closed()
+        # await dp.storage.wait_closed()
         await bot.session.close()
 
 

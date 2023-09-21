@@ -17,7 +17,3 @@ def give_access_kb(id: int) -> InlineKeyboardMarkup:
     kb = [[InlineKeyboardButton(text="allow", callback_data=f"access_allow-{id}")],
           [InlineKeyboardButton(text="deny", callback_data=f"access_deny-{id}")]]
     return InlineKeyboardMarkup(inline_keyboard=kb)
-
-# give_access_kb = InlineKeyboardMarkup()
-# give_access_kb.add(InlineKeyboardButton("allow", callback_data="access_allow"))
-# give_access_kb.add(InlineKeyboardButton("deny", callback_data="access_deny"))

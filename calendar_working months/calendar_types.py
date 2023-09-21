@@ -1,11 +1,12 @@
 from enum import IntEnum
+import calendar
 
 from aiogram.filters.callback_data import CallbackData
 
 
 # setting callback_data prefix and parts
 
-WEEKDAYS = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+WEEKDAYS = calendar.day_abbr  #["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
 
 
 class DialogCalendarAction(IntEnum):

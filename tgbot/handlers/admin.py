@@ -6,7 +6,7 @@ from aiogram.filters.command import Command
 import json
 
 from tgbot.keyboards.reply import default_kb
-from tgbot.filters.admin import AdminFilter
+from tgbot.filters.admin import AdminFilter, SuperAdminFilter
 
 
 router = Router()
@@ -21,7 +21,7 @@ async def admin_start(message: Message):
     await message.reply(msg, reply_markup=default_kb())
 
 
-@router.callback_query()
+@router.callback_query(F.text.startswith("access"), SuperAdminFilter(True))
 async def give_access(callback_query: types.CallbackQuery):
     answer = callback_query.data.split('_')[1].split('-')[0]
     if answer == "allow":

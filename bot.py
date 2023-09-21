@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 # from aiogram.fsm.storage.redis import RedisStorage
 
-from tgbot.config import load_config
+from tgbot.config import Config_settings
 from tgbot.filters.admin import AdminFilter
 from tgbot.handlers import admin
 from tgbot.handlers import echo
@@ -25,7 +25,7 @@ async def main():
         format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
     )
     logger.info("Starting bot")
-    config = load_config(".env")
+    config = Config_settings
 
     storage = MemoryStorage()  # RedisStorage() if config.tg_bot.use_redis else
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
@@ -33,8 +33,6 @@ async def main():
     dp.include_router(user.router)
     dp.include_router(echo.router)
     dp.include_router(admin.router)
-
-    # bot['config'] = config
 
     # start
     try:

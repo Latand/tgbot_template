@@ -40,7 +40,7 @@ def load_config(path: str = None) -> Config:
             token=env.str("BOT_TOKEN"),
             admin_ids=list(map(int, env.list("ADMINS"))),
             use_redis=env.bool("USE_REDIS"),
-            super_admin_ids=list(map(int, env.list("SUPER_ADMINS"))),
+            super_admin_ids=env.int("SUPER_ADMINS"),
         ),
         db=DbConfig(
             host=env.str('DB_HOST'),
@@ -50,5 +50,6 @@ def load_config(path: str = None) -> Config:
         ),
         misc=Miscellaneous()
     )
+
 
 Config_settings = load_config(".env")

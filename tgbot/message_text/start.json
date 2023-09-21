@@ -1,4 +1,6 @@
 {
-  "admin_start": "Hello!",
-  "user_start": "Hello, user!"
+  "admin_start": "Hello, admin!",
+  "stars_start": "Hello, stars!",
+  "men_start": "Hello, men!",
+  "women_start": "Hello, women!"
 }

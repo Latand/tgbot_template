@@ -6,7 +6,7 @@ from aiogram.filters.command import Command
 import json
 
 from tgbot.keyboards.reply import default_kb
-from tgbot.filters.admin import AdminFilter, SuperAdminFilter
+from tgbot.filters.groups import AdminFilter, SuperAdminFilter
 
 
 router = Router()

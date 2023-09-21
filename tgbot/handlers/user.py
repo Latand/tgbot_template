@@ -5,7 +5,7 @@ from aiogram.types import Message
 import json
 
 from tgbot.keyboards.inline import give_access_kb
-from tgbot.config import Config_settings
+from tgbot.config import Config_settings, Config
 
 
 router = Router()

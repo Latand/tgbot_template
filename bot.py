@@ -11,6 +11,7 @@ from tgbot.handlers import admin
 from tgbot.handlers import echo
 from tgbot.handlers import user
 from tgbot.handlers import start
+from tgbot.handlers.stars import schedule, activities, scholarship, faq, feedback
 
 
 logger = logging.getLogger(__name__)
@@ -31,10 +32,15 @@ async def main():
     storage = MemoryStorage()  # RedisStorage() if config.tg_bot.use_redis else
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
     dp = Dispatcher(bot=bot, storage=storage)
+    dp.include_router(schedule.router)
+    dp.include_router(activities.router)
+    dp.include_router(scholarship.router)
+    dp.include_router(faq.router)
+    dp.include_router(feedback.router)
     dp.include_router(start.router)
-    dp.include_router(user.router)
-    dp.include_router(echo.router)
-    dp.include_router(admin.router)
+    # dp.include_router(user.router)
+    # dp.include_router(echo.router)
+    # dp.include_router(admin.router)
 
     # start
     try:

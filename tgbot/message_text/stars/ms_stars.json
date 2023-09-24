@@ -1,9 +1,17 @@
 {
   "from_main_menu": {
     "schedule": "Choose: ",
-    "feedback": "Leave a feedback",
-    "scholarship": "Money, money, money",
-    "activity": "Party, party",
-    "questions": "FAQ:"
+    "feedback": {
+      "start": "Leave a feedback",
+      "finish": "TY"
+    },
+    "scholarship": {
+    },
+    "activities": "Party, party",
+    "questions": {
+      "msg": "FAQ",
+      "answers": {
+      }
+    }
   }
 }

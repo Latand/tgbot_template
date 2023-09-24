@@ -13,7 +13,7 @@ router = Router()
 
 @router.message(Command(commands=["start"]))
 async def user_start(message: Message, bot: Bot):
-    with open("users.json", "r") as file:
+    with open("users.json", "r", encoding="utf-8") as file:
         users_list = json.load(file)
     if message.from_user not in users_list:
         config: Config = Config_settings

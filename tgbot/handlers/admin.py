@@ -14,7 +14,7 @@ router = Router()
 
 @router.message(Command(commands=["start"]), AdminFilter(True))
 async def admin_start(message: Message):
-    with open("tgbot/message_text/start.json", "r") as f:
+    with open("tgbot/message_text/start.json", "r", encoding="utf-8") as f:
         json_data: str = f.read()
         text: dict = json.loads(json_data)
     msg: str = text["admin_start"]

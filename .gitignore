@@ -61,3 +61,7 @@ venv.bak/
 .pyre/
 .idea/*
 .env!/test.py
+qodana.yaml
+
+# Config files
+.env
